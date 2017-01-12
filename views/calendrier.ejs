@@ -1,0 +1,145 @@
+
+<!-- Begin page content -->
+<div class="container">
+  <div class="page-header">
+    <h1>Présentation sails.js</h1>
+    <h2>Le calendrier magique</h2>
+  </div>
+
+  <div class="accordion" id="accordion">
+
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <strong> Suivi des messages</strong>
+      </div>
+      <div class="accordion-body">
+        <div  class="accordion-inner">
+          <!-- Contenu des messages -->
+          <div id="messages"></div>
+          <input id="message-a-transmettre" type="text" class="form-control"/>
+          <button id="saluer" type="button" class="btn btn-info" style="margin-bottom:10px" >Envoyer</button><br/>
+          
+        </div>
+      </div>
+    </div> 
+
+    <form id="form-creer-evenement">
+      <input name="type" class="type" type="radio" value="Anniversaire" checked/> Anniversaire<br/>
+      <input name="type" class="type" type="radio" value="DeadLine"/> DeadLine<br/>
+      <input name="type" class="type" type="radio" value="CodingDojo"/> CodingDojo<br/>
+      <input name="type" class="type" type="radio" value="Autres"/> Autres<br/>
+      <input id="objet" type="text"/> <br/>
+      <button id="creer-evenement" type="button" class="btn btn-success" >Creer evenement</button>
+    </form>
+
+  </div>
+</div>
+
+<div id="footer">
+  <div class="container">
+    <p class="muted credit">
+      Présentation Sails.js : <a href="mailto:chafi.cassim@soprasteria.com?subject=[Presentation Sails.js]">Chafi Cassim</a> et <a href="mailto:aurelien.audelin@soprasteria.com?subject=[Presentation Sails.js]">Aurélien Audelin</a>.
+    </p>
+  </div>
+</div>
+
+<!-- jQuery 2.2.3 -->
+<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Sails.io -->
+<script type="text/javascript" src="/js/dependencies/sails.io.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Slimscroll -->
+<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+<!-- fullCalendar 2.2.5 -->
+<script src="/plugins/moment/moment.js"></script>
+<script src="/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script type="text/javascript">
+$(window).load(function() {
+  // Partie Sockets
+  io.socket.get('/rejoindre', function rejoindreRoom(donnees, jwRes) {
+    console.log(jwRes);
+
+    // Partie chat
+    io.socket.on('salutation', function (donneesRecues) {
+      console.log(donneesRecues);
+      var balise;
+      balise = donneesRecues.id + " : " + donneesRecues.message + "<br/>";
+      $("#messages").append(balise);
+    });
+
+    // Partie création d'évenement
+    io.socket.on('creer-evenement', function creationEvenement(donneesModifiees) {
+      console.log('Creation d un evenement', donneesModifiees);
+      ajouterEvenements(donneesModifiees, $(".accordion-group").length);
+    });
+
+    // Partie suppression d'évenement
+    io.socket.on('supprimer-evenement', function suppressionEvenement(donneesModifiees) {
+      console.log('Suppression', donneesModifiees);
+      supprimerEvenement(donneesModifiees.id);
+    });
+  });
+
+  // Partie Evenements
+  io.socket.get('/evenement', function recupererEvenements(corps, jwRes) {
+    console.log('Evenements actuels : ', corps);
+    corps.forEach(ajouterEvenements);
+
+
+  });
+
+
+
+});
+
+function supprimerEvenement (identifiant) {
+  $("#accordionN"+identifiant).remove();
+}
+
+function ajouterEvenements (item, index) {
+
+  var balise;
+  balise = "    <div id='accordionN"+ item.id + "' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle collapsed' data-toggle='collapse' data-parent='#accordion' href='#stepN" + item.id + "'> <strong>" + item.type + "</strong> le "+item.createdAt+" </a></div><div id='stepN"+ item.id + "' class='accordion-body collapse'><div class='accordion-inner'><h4>" + item.objet +"</h4></div></div><button id='"+item.id+"' type='button' class='btn btn-danger' >Supprimer</button></div>";
+
+  $('#accordion').append(balise);
+
+  $("#"+item.id).click(function () {
+    io.socket.post('/supprimer-evenement', {id: item.id}, function saluerPersonnes (donnees, jwRes) {
+      console.log(jwRes);
+
+    });
+
+    // Exemple d'un reload classique, supprimer l'abonnement à l'évenement de suppression
+    //location.reload();
+  });
+
+};
+
+// Actions des boutons
+$('#saluer').click(function () {
+  io.socket.post('/saluer', {message: $('#message-a-transmettre').val()}, function saluerPersonnes (donnees, jwRes) {
+    console.log(jwRes);
+  });
+});
+
+$('#creer-evenement').click(function () {
+  var date = new Date();
+  date.setDate(date.getDate()-1);
+  io.socket.post('/creer-evenement', {type: $('.type:checked').val(), objet: $('#objet').val(), date: date.toString()}, function saluerPersonnes (donnees, jwRes) {
+    console.log(jwRes);
+
+  });
+});
+
+
+
+</script>

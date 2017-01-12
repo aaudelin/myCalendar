@@ -1,0 +1,347 @@
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="" class="logo">
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>my</b>Calendar</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-sticky-top">
+      <div class="navbar-custom-menu">
+
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        myCalendar
+        <small>Make my dreams come true</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="."><i class="fa fa-dashboard"></i> Accueil</a></li>
+        <li class="active">myCalendar</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h4 class="box-title">myChat</h4>
+            </div>
+            <div class="box-body">
+              <!-- the events -->
+              <div id="external-events">
+                <div id="messages"></div>
+
+                <div class="input-group">
+                  <input id="message-a-transmettre" type="text" class="form-control"/>
+                  <div class="input-group-btn">
+                    <button id="saluer" type="button" class="btn btn-info" >Envoyer</button>
+                  </div>
+                  <!-- /btn-group -->
+                </div>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /. box -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">Créer un évènement</h3>
+            </div>
+            <div class="box-body">
+              <!-- /btn-group -->
+              <div id="color-chooser">
+                <label class="text-blue">
+                  <input id="Anniversaire" name="type" class="type" type="radio" value="Anniversaire" checked/> Anniversaire
+                </label><br/>
+                <label class="text-orange">
+                  <input id="DeadLine" name="type" class="type" type="radio" value="DeadLine"/> DeadLine
+                </label><br/>
+                <label class="text-green">
+                  <input id="CodingDojo" name="type" class="type" type="radio" value="CodingDojo"/> CodingDojo
+                </label><br/>
+                <label class="text-red">
+                  <input id="Autres" name="type" class="type" type="radio" value="Autres"/> Autres
+                </label><br/>
+              </div>
+              <div class="date-picker">
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <label for="datepicker"><i class="fa fa-calendar"></i><label>
+                    </div>
+                    <input type="text" class="form-control pull-right" id="datepicker">
+                  </div>
+                </div>
+                <div class="input-group">
+                  <input id="objet" type="text" class="form-control" placeholder="Objet">
+
+                  <div class="input-group-btn">
+                    <button id="creer-evenement" type="button" class="btn btn-primary btn-flat">Créer</button>
+                  </div>
+                  <!-- /btn-group -->
+                </div>
+                <!-- /input-group -->
+              </div>
+            </div>
+
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="box box-primary">
+              <div class="box-body no-padding">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Suppression</h4>
+          </div>
+          <div class="modal-body">
+            Êtes-vous sûr de vouloir supprimer l'événement ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="btn-supprimer">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 2.3.7
+      </div>
+      <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+      reserved.
+    </footer>
+
+  <!-- Add the sidebar's background. This div must be placed
+  immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<script src="/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Qtip -->
+<script src="/plugins/jQuery/jquery.qtip.min.js"></script>
+<!-- Sails.io -->
+<script type="text/javascript" src="/js/dependencies/sails.io.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="/plugins/jQueryUI/jquery-ui.min.js"></script>
+<!-- Slimscroll -->
+<script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/app.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+<!-- fullCalendar 2.2.5 -->
+<script src="/plugins/moment/moment.js"></script>
+<script src="/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="/plugins/fullcalendar/locale/fr.js"></script>
+<!-- Page specific script -->
+<!-- bootstrap datepicker -->
+<script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/plugins/datepicker/locales/bootstrap-datepicker.fr.js"></script>
+<!-- bootstrap time picker -->
+<script src="/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+
+<script>
+$(function () {
+
+    /* initialize the external events
+    -----------------------------------------------------------------*/
+    function ini_events(ele) {
+      ele.each(function () {
+
+        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+        // it doesn't need to have a start or end
+        var eventObject = {
+          title: $.trim($(this).text()) // use the element's text as the event title
+        };
+
+        // store the Event Object in the DOM element so we can get to it later
+        $(this).data('eventObject', eventObject);
+
+        // make the event draggable using jQuery UI
+        $(this).draggable({
+          zIndex: 1070,
+          revert: true, // will cause the event to go back to its
+          revertDuration: 0  //  original position after the drag
+        });
+
+      });
+    }
+
+    ini_events($('#external-events div.external-event'));
+
+    /* initialize the calendar
+    -----------------------------------------------------------------*/
+    //Date for the calendar events (dummy data)
+    $('#calendar').fullCalendar({
+
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      buttonText: {
+        today: "aujourd'hui",
+        month: 'mois',
+        week: 'semaine',
+        day: 'jour'
+      },
+      editable: false,
+      droppable: false, // this allows things to be dropped onto the calendar !!!
+      eventClick: function(calEvent, jsEvent, view) {
+        $('#myModal').modal("show");
+        // Reset du bouton
+        $("#btn-supprimer").unbind("click");
+        $("#btn-supprimer").click(function (argument) {
+          io.socket.post('/supprimer-evenement', {id: calEvent.id}, function saluerPersonnes (donnees, jwRes) {
+            console.log(jwRes);
+
+          });
+          $('#myModal').modal("hide");
+        });
+        /*if(confirm("Voulez-vous supprimer l'événement ?")) {
+          io.socket.post('/supprimer-evenement', {id: calEvent.id}, function saluerPersonnes (donnees, jwRes) {
+            console.log(jwRes);
+
+          });
+        }*/
+
+      },
+      eventRender: function(event, element) {
+        element.qtip({
+          content: event.description
+        });
+      }
+    });
+
+    /* ADDING EVENTS */
+    $("#color-chooser > label > input").change(function (e) {
+      e.preventDefault();
+      //Save color
+      currColor = $(this).css("color");
+      //Add color effect to button
+      $('#creer-evenement').css({"background-color": currColor, "border-color": currColor});
+    });
+  });
+
+// Gestion des events
+$(window).load(function() {
+  // Partie Sockets
+  io.socket.get('/rejoindre', function rejoindreRoom(donnees, jwRes) {
+    console.log(jwRes);
+
+    // Partie chat
+    io.socket.on('salutation', function (donneesRecues) {
+      console.log(donneesRecues);
+      var balise;
+      balise = donneesRecues.id + " : " + donneesRecues.message + "<br/>";
+      $("#messages").append(balise);
+    });
+
+    // Partie création d'évenement
+    io
+    .socket.on('creer-evenement', function creationEvenement(donneesModifiees) {
+      console.log('Creation d un evenement', donneesModifiees);
+      ajouterEvenements(donneesModifiees, donneesModifiees.id);
+    });
+
+    // Partie suppression d'évenement
+    io.socket.on('supprimer-evenement', function suppressionEvenement(donneesModifiees) {
+      console.log('Suppression', donneesModifiees);
+      supprimerEvenement(donneesModifiees.id);
+    });
+  });
+
+  // Partie Evenements
+  io.socket.get('/evenement', function recupererEvenements(corps, jwRes) {
+    console.log('Evenements actuels : ', corps);
+    corps.forEach(ajouterEvenements);
+
+
+  });
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true,
+      format: "mm/dd/yyyy",
+      language: "fr"
+    });
+
+  });
+
+function supprimerEvenement (identifiant) {
+  $('#calendar').fullCalendar('removeEvents',identifiant);
+}
+
+function ajouterEvenements (item, index) {
+
+  var evenement;
+  evenement= {
+    id: item.id,
+    title: item.objet,
+    description: item.type,
+    allDay: true,
+    start: item.date,
+          backgroundColor: $("#"+item.type).parent().css("color"), //red
+          borderColor: $("#"+item.type).parent().css("color")  
+        };
+
+        $('#calendar').fullCalendar('renderEvent', evenement, true);
+
+
+
+      };
+
+// Actions des boutons
+$('#saluer').click(function () {
+  io.socket.post('/saluer', {message: $('#message-a-transmettre').val()}, function saluerPersonnes (donnees, jwRes) {
+    console.log(jwRes);
+  });
+});
+
+$('#creer-evenement').click(function () {
+  io.socket.post('/creer-evenement', {type: $('.type:checked').val(), objet: $('#objet').val(), date: $('#datepicker').val()}, function saluerPersonnes (donnees, jwRes) {
+    console.log(jwRes);
+
+  });
+});
+
+
+
+</script>
